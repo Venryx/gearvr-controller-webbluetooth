@@ -35,7 +35,7 @@ class ControllerBluetoothInterface {
 
 	onDeviceConnected(device: BluetoothDevice) {
 		if (this.onDeviceDisconnected) {
-			device.addEventListener("gattserverdisconnected", this.onDeviceDisconnected);
+			device.addEventListener("gattserverdisconnected", e=>this.onDeviceDisconnected(e));
 		}
 
 		return device.gatt?.connect();
@@ -80,7 +80,7 @@ class ControllerBluetoothInterface {
 		//this.gattServer = await device.gatt?.connect()!;
 		await this.customServiceNotify.startNotifications();
 		console.log("Test4");
-		this.customServiceNotify.addEventListener("characteristicvaluechanged", this.onNotificationReceived);
+		this.customServiceNotify.addEventListener("characteristicvaluechanged", e=>this.onNotificationReceived(e));
 		console.log("Test5");
 		/*setInterval(async()=>{
 			/*const val = await this.customServiceNotify.readValue();
@@ -94,8 +94,10 @@ class ControllerBluetoothInterface {
 	}
 
 	onNotificationReceived(e) {
-		const {buffer} = e.target.value;
+		const {buffer} = e.target.value as {buffer: ArrayBuffer};
 		const eventData = new Uint8Array(buffer);
+		// first data-packet can have byteLength of 2; not sure what this represents, so ignoring
+		if (eventData.byteLength < 4) return;
 
 		// Max observed value = 315
 		// (corresponds to touchpad sensitive dimension in mm)
@@ -112,7 +114,7 @@ class ControllerBluetoothInterface {
 
 		// com.samsung.android.app.vr.input.service/ui/c.class:L222
 		//const firstInt32 = new Int32Array(buffer.slice(0, 3))[0];
-		const firstInt32 = new Int32Array(buffer.slice(0, 4))[0];
+		const firstInt32 = new Int32Array(eventData.slice(0, 4))[0];
 		const timestamp = (firstInt32 & 0xFFFFFFFF) / 1000 * CBIUtils.TIMESTAMP_FACTOR;
 
 		// com.samsung.android.app.vr.input.service/ui/c.class:L222

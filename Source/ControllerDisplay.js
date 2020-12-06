@@ -52,33 +52,15 @@ class ControllerDisplay {
 		this.renderer.setSize(innerWidth, innerHeight);
 		document.body.appendChild(this.renderer.domElement);
 
-		// Bind to self because ES6 classes suck vs TS
-		this.animate = this.animate.bind(this);
-		this.updateTexture = this.updateTexture.bind(this);
-		this.log = this.log.bind(this);
-		this.onMTLLoaded = this.onMTLLoaded.bind(this);
-		this.onOBJLoaded = this.onOBJLoaded.bind(this);
-		this.onSelectDeviceAction = this.onSelectDeviceAction.bind(this);
-		this.onClickDeviceActionButton = this.onClickDeviceActionButton.bind(this);
-		this.onControllerDataReceived = this.onControllerDataReceived.bind(this);
-
 		this.wasAnyButtonDown = false;
 
 		const mtlLoader = new THREE.MTLLoader();
 		mtlLoader.setPath(this.PATH);
-		mtlLoader.load('gear_vr_controller.mtl', this.onMTLLoaded);
+		mtlLoader.load('gear_vr_controller.mtl', materials=>this.onMTLLoaded(materials));
 
 		if (navigator.bluetooth) {
-			document.getElementById('deviceActions').addEventListener(
-				'change',
-				this.onSelectDeviceAction
-			);
-
-			document.getElementById('deviceActionsButton').addEventListener(
-				'click',
-				this.onClickDeviceActionButton
-			);
-
+			document.getElementById('deviceActions').addEventListener('change', e=>this.onSelectDeviceAction(e));
+			document.getElementById('deviceActionsButton').addEventListener('click', e=>this.onClickDeviceActionButton());
 		} else {
 			document.getElementById('webbluetoothNotSupported').classList.add('show');
 		}
@@ -86,7 +68,7 @@ class ControllerDisplay {
 		this.logElement = document.getElementById('deviceActionsLog');
 
 		console.log("Test13:", window["ControllerBluetoothInterface"]);
-		this.controllerBluetoothInterface = window.test1 = new window.ControllerBluetoothInterface(this.onControllerDataReceived);
+		this.controllerBluetoothInterface = window.test1 = new window.ControllerBluetoothInterface(data=>this.onControllerDataReceived(data));
 	}
 
 	log(msg) {
@@ -94,7 +76,7 @@ class ControllerDisplay {
 	}
 
 	animate() {
-		requestAnimationFrame(this.animate);
+		requestAnimationFrame(()=>this.animate());
 		this.renderer.render(this.scene, this.camera);
 	}
 
@@ -103,7 +85,7 @@ class ControllerDisplay {
 		const objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials(materials);
 		objLoader.setPath(this.PATH);
-		objLoader.load('gear_vr_controller.obj', this.onOBJLoaded);
+		objLoader.load('gear_vr_controller.obj', obj=>this.onOBJLoaded(obj));
 
 	};
 

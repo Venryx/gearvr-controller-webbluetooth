@@ -10,7 +10,7 @@ class ControllerBluetoothInterface {
     onDeviceConnected(device) {
         var _a;
         if (this.onDeviceDisconnected) {
-            device.addEventListener("gattserverdisconnected", this.onDeviceDisconnected);
+            device.addEventListener("gattserverdisconnected", e => this.onDeviceDisconnected(e));
         }
         return (_a = device.gatt) === null || _a === void 0 ? void 0 : _a.connect();
     }
@@ -47,7 +47,7 @@ class ControllerBluetoothInterface {
         //this.gattServer = await device.gatt?.connect()!;
         await this.customServiceNotify.startNotifications();
         console.log("Test4");
-        this.customServiceNotify.addEventListener("characteristicvaluechanged", this.onNotificationReceived);
+        this.customServiceNotify.addEventListener("characteristicvaluechanged", e => this.onNotificationReceived(e));
         console.log("Test5");
         /*setInterval(async()=>{
             /*const val = await this.customServiceNotify.readValue();
@@ -62,6 +62,9 @@ class ControllerBluetoothInterface {
         var _a;
         const { buffer } = e.target.value;
         const eventData = new Uint8Array(buffer);
+        // first data-packet can have byteLength of 2; not sure what this represents, so ignoring
+        if (eventData.byteLength < 4)
+            return;
         // Max observed value = 315
         // (corresponds to touchpad sensitive dimension in mm)
         const axisX = (((eventData[54] & 0xF) << 6) +
@@ -71,7 +74,7 @@ class ControllerBluetoothInterface {
             ((eventData[56] & 0xFF) >> 0)) & 0x3FF;
         // com.samsung.android.app.vr.input.service/ui/c.class:L222
         //const firstInt32 = new Int32Array(buffer.slice(0, 3))[0];
-        const firstInt32 = new Int32Array(buffer.slice(0, 4))[0];
+        const firstInt32 = new Int32Array(eventData.slice(0, 4))[0];
         const timestamp = (firstInt32 & 0xFFFFFFFF) / 1000 * CBIUtils.TIMESTAMP_FACTOR;
         // com.samsung.android.app.vr.input.service/ui/c.class:L222
         const temperature = eventData[57];
