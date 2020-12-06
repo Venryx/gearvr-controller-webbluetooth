@@ -576,4 +576,10 @@ AHRS.prototype.getEulerAnglesDegrees = function() {
 
 module.exports = AHRS;
 
+// v
+/*window.AHRS = AHRS;
+console.log("Set:", AHRS);*/
+
 },{"./Madgwick":"./Madgwick","./Mahony":"./Mahony"}]},{},[]);
+
+//require("ahrs"); // v

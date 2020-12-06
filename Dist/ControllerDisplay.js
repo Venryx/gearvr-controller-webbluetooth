@@ -1,5 +1,5 @@
 "use strict";
-window.AHRS = require('ahrs');
+window.AHRS = require("ahrs");
 class ControllerDisplay {
     constructor() {
         this.PATH = 'models/';
@@ -174,6 +174,7 @@ class ControllerDisplay {
         let deltaTimeSeconds = 0;
         this.updateTexture(data);
         if (this.lastTimestamp) {
+            //deltaTimeSeconds = (data.timestamp - this.lastTimestamp);
             deltaTimeSeconds = (data.timestamp - this.lastTimestamp);
             this.ahrs.update(data.gyro[0], data.gyro[1], data.gyro[2], data.accel[0], data.accel[1], data.accel[2], data.magX, data.magY, data.magZ, deltaTimeSeconds);
             // this.ahrs.update(

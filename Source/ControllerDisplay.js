@@ -1,4 +1,4 @@
-window.AHRS = require('ahrs');
+window.AHRS = require("ahrs");
 
 class ControllerDisplay {
 	constructor() {
@@ -230,6 +230,7 @@ class ControllerDisplay {
 		this.updateTexture(data);
 
 		if (this.lastTimestamp) {
+			//deltaTimeSeconds = (data.timestamp - this.lastTimestamp);
 			deltaTimeSeconds = (data.timestamp - this.lastTimestamp);
 
 			this.ahrs.update(

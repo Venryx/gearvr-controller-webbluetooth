@@ -74,8 +74,12 @@ class ControllerBluetoothInterface {
             ((eventData[56] & 0xFF) >> 0)) & 0x3FF;
         // com.samsung.android.app.vr.input.service/ui/c.class:L222
         //const firstInt32 = new Int32Array(buffer.slice(0, 3))[0];
-        const firstInt32 = new Int32Array(eventData.slice(0, 4))[0];
-        const timestamp = (firstInt32 & 0xFFFFFFFF) / 1000 * CBIUtils.TIMESTAMP_FACTOR;
+        const firstInt32 = new Int32Array(buffer.slice(0, 4))[0];
+        //const firstInt32 = new Int32Array(eventData.slice(0, 4))[0];
+        //const firstInt32 = new Int32Array([...eventData.slice(0, 3), 0])[0];
+        //const firstInt32 = new Int32Array([0, ...eventData.slice(0, 3)])[0];
+        //const firstInt32 = new Uint32Array(eventData.slice(0, 4))[0];
+        const timestamp = ((firstInt32 & 0xFFFFFFFF) / 1000) * CBIUtils.TIMESTAMP_FACTOR;
         // com.samsung.android.app.vr.input.service/ui/c.class:L222
         const temperature = eventData[57];
         const { getAccelerometerFloatWithOffsetFromArrayBufferAtIndex, getGyroscopeFloatWithOffsetFromArrayBufferAtIndex, getMagnetometerFloatWithOffsetFromArrayBufferAtIndex } = CBIUtils;

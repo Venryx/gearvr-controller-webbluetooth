@@ -35,7 +35,7 @@ class ControllerBluetoothInterface {
 
 	onDeviceConnected(device: BluetoothDevice) {
 		if (this.onDeviceDisconnected) {
-			device.addEventListener("gattserverdisconnected", e=>this.onDeviceDisconnected(e));
+			device.addEventListener("gattserverdisconnected", e=>this.onDeviceDisconnected!(e));
 		}
 
 		return device.gatt?.connect();
@@ -114,8 +114,12 @@ class ControllerBluetoothInterface {
 
 		// com.samsung.android.app.vr.input.service/ui/c.class:L222
 		//const firstInt32 = new Int32Array(buffer.slice(0, 3))[0];
-		const firstInt32 = new Int32Array(eventData.slice(0, 4))[0];
-		const timestamp = (firstInt32 & 0xFFFFFFFF) / 1000 * CBIUtils.TIMESTAMP_FACTOR;
+		const firstInt32 = new Int32Array(buffer.slice(0, 4))[0];
+		//const firstInt32 = new Int32Array(eventData.slice(0, 4))[0];
+		//const firstInt32 = new Int32Array([...eventData.slice(0, 3), 0])[0];
+		//const firstInt32 = new Int32Array([0, ...eventData.slice(0, 3)])[0];
+		//const firstInt32 = new Uint32Array(eventData.slice(0, 4))[0];
+		const timestamp = ((firstInt32 & 0xFFFFFFFF) / 1000) * CBIUtils.TIMESTAMP_FACTOR;
 
 		// com.samsung.android.app.vr.input.service/ui/c.class:L222
 		const temperature = eventData[57];
@@ -131,24 +135,24 @@ class ControllerBluetoothInterface {
 			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 4, 0),
 			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 6, 0),
 			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 8, 0),
-			// getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 4, 1),
-			// getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 6, 1),
-			// getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 8, 1),
-			// getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 4, 2),
-			// getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 6, 2),
-			// getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 8, 2)
+			/*getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 4, 1),
+			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 6, 1),
+			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 8, 1),*/
+			/*getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 4, 2),
+			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 6, 2),
+			getAccelerometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 8, 2)*/
 		].map(v => v * CBIUtils.ACCEL_FACTOR);
 
 		const gyro = [
 			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 10, 0),
 			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 12, 0),
 			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 14, 0),
-			// getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 10, 1),
-			// getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 12, 1),
-			// getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 14, 1),
-			// getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 10, 2),
-			// getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 12, 2),
-			// getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 14, 2)
+			/*getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 10, 1),
+			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 12, 1),
+			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 14, 1),*/
+			/*getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 10, 2),
+			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 12, 2),
+			getGyroscopeFloatWithOffsetFromArrayBufferAtIndex(buffer, 14, 2)*/
 		].map(v => v * CBIUtils.GYRO_FACTOR);
 
 		const magX = getMagnetometerFloatWithOffsetFromArrayBufferAtIndex(buffer, 0);
