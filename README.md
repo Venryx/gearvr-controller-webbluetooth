@@ -15,7 +15,7 @@ To fix:
 1) Disable your pc's Bluetooth. (using action center or Settings app)
 2) Enable your pc's Bluetooth.
 3) Remove the "Gear VR Controller" entry from the Bluetooth paired-devices list.
-4) Reload the demo webpage. (appears to not actually be necessary, but you can do it to be sure)
+4) Reload the demo webpage. (appears to not actually be necessary, but you can do it to be safe)
 5) Start the process like normal. (run "Pair with Gear VR controller", wait a bit, then run "Start controller data updates")
 
 ## Legal
