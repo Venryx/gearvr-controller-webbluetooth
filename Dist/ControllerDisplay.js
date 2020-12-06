@@ -210,7 +210,7 @@ class ControllerDisplay {
             this.gearVRController.quaternion.premultiply(this.lastZeroQuaternion);
         }
     }
-    onClickDeviceActionButton() {
+    async onClickDeviceActionButton() {
         const controllerBluetoothInterface = this.controllerBluetoothInterface;
         console.log("Running command...");
         switch (this.selectedDeviceAction) {
@@ -227,8 +227,19 @@ class ControllerDisplay {
                 break;
             case 'sensor':
                 // Have to do the SENSOR -> VR -> SENSOR cycle a few times to ensure it runs
-                controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE)
-                    .then(() => controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR));
+                /*await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);*/
+                // sequence from: https://github.com/rdady/gear-vr-controller-linux/blob/master/gearVRC.py#L66
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_LPM_ENABLE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_LPM_DISABLE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
                 break;
             default:
         }

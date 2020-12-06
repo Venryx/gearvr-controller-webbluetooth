@@ -1,7 +1,7 @@
 # gearvr-controller-webbluetooth
 
-- [Gear VR controller web bluetooth demo](https://jsyang.ca/gearvr-controller-webbluetooth/index.html)
-- [Reverse engineering process](http://jsyang.ca/hacks/gear-vr-rev-eng/)
+- [Gear VR controller web bluetooth demo](https://venryx.github.io/gearvr-controller-webbluetooth)
+- [Reverse engineering process](http://jsyang.ca/hacks/gear-vr-rev-eng)
 
 This demo only works in [browsers supporting Web Bluetooth](https://caniuse.com/#feat=web-bluetooth). As of Feb 2018, this just means Chrome. 
 
