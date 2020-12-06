@@ -1,5 +1,5 @@
 <html>
-<style>
+    <style>
     #deviceActions {
         position: absolute;
         left: 1em;
@@ -34,43 +34,43 @@
     #webbluetoothNotSupported.show {
         display: block;
     }
-</style>
-<body style="padding:0;margin: 0; background: rgb(64,64,64)">
-<div id="deviceActions">
-    <select id="deviceActionsOption">
-        <option disabled selected>Select a device action:</option>
-        <option value="pair">Pair with Gear VR controller</option>
-        <option value="calibrate">Calibrate controller</option>
-        <option value="sensor">Start controller data updates</option>
-        <option value="disconnect">Disconnect</option>
-    </select>
+    </style>
+    <body style="padding:0;margin: 0; background: rgb(64,64,64)">
+        <div id="deviceActions">
+            <select id="deviceActionsOption">
+                <option disabled selected>Select a device action:</option>
+                <option value="pair">Pair with Gear VR controller</option>
+                <option value="calibrate">Calibrate controller</option>
+                <option value="sensor">Start controller data updates</option>
+                <option value="disconnect">Disconnect</option>
+            </select>
 
-    <button id="deviceActionsButton">Run</button>
+            <button id="deviceActionsButton">Run</button>
 
-    <div id="deviceActionsLog">
-        Messages about the device appear here.
-    </div>
-</div>
-<div id="webbluetoothNotSupported">
-    Sorry, your browser cannot run this demo unless it supports the
-    <a href="https://www.chromestatus.com/feature/5264933985976320">Web Bluetooth API</a>.<br><br>
-    If you're running a recent version of Chrome that supports this API but has it disabled, you can
-    go to <code>chrome://flags/#enable-experimental-web-platform-features</code> and tick the
-    "Experimental Web Platform features" to enable it.
-</div>
-</body>
-<!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>-->
-<!--<script src="node_modules/three/build/three.min.js"></script>-->
-<!--<script src="node_modules/three/examples/js/loaders/MTLLoader.js"></script>-->
-<!--<script src="node_modules/three/examples/js/loaders/OBJLoader.js"></script>-->
-<!--<script src="node_modules/ahrs/build/www-ahrs.js"></script>-->
+            <div id="deviceActionsLog">
+                Messages about the device appear here.
+            </div>
+        </div>
+        <div id="webbluetoothNotSupported">
+            Sorry, your browser cannot run this demo unless it supports the
+            <a href="https://www.chromestatus.com/feature/5264933985976320">Web Bluetooth API</a>.<br><br>
+            If you're running a recent version of Chrome that supports this API but has it disabled, you can
+            go to <code>chrome://flags/#enable-experimental-web-platform-features</code> and tick the
+            "Experimental Web Platform features" to enable it.
+        </div>
+    </body>
+    <!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>-->
+    <!--<script src="node_modules/three/build/three.min.js"></script>-->
+    <!--<script src="node_modules/three/examples/js/loaders/MTLLoader.js"></script>-->
+    <!--<script src="node_modules/three/examples/js/loaders/OBJLoader.js"></script>-->
+    <!--<script src="node_modules/ahrs/build/www-ahrs.js"></script>-->
 
-<script src="dist/babel.min.js"></script>
-<script src="dist/three.min.js"></script>
-<script src="dist/MTLLoader.js"></script>
-<script src="dist/OBJLoader.js"></script>
-<script src="dist/www-ahrs.js"></script>
+    <script src="Libs/babel.min.js"></script>
+    <script src="Libs/three.min.js"></script>
+    <script src="Libs/MTLLoader.js"></script>
+    <script src="Libs/OBJLoader.js"></script>
+    <script src="Libs/www-ahrs.js"></script>
 
-<script type="text/babel" src="ControllerBluetoothInterface.js"></script>
-<script type="text/babel" src="ControllerDisplay.js"></script>
+    <script src="Dist/ControllerBluetoothInterface.js"></script>
+    <script src="Dist/ControllerDisplay.js"></script>
 </html>

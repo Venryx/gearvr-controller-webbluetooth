@@ -1,6 +1,6 @@
 {
   "name": "gearvr-controller-webbluetooth",
-  "version": "0.1",
+  "version": "0.0.1",
   "author": {
     "name": "jsyang.ca@gmail.com",
     "url": "http://jsyang.ca/"
@@ -10,8 +10,16 @@
     "url": "git://github.com/jsyang/gearvr-controller-webbluetooth.git"
   },
   "main": "ControllerBluetoothInterface.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "dist": "tsc",
+    "start": "http-server -p 80"
+  },
   "devDependencies": {
+    "@types/web-bluetooth": "0.0.9",
     "ahrs": "^1.1.6",
-    "three": "^0.90.0"
+    "http-server": "^0.12.3",
+    "three": "^0.90.0",
+    "typescript": "^4.1.2"
   }
 }
