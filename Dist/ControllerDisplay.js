@@ -227,19 +227,21 @@ class ControllerDisplay {
                 break;
             case 'sensor':
                 // Have to do the SENSOR -> VR -> SENSOR cycle a few times to ensure it runs
-                /*await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
-                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
-                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
-                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);*/
+                for (let i = 0; i < 3; i++) {
+                    if (i != 0)
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
+                    await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
+                }
                 // sequence from: https://github.com/rdady/gear-vr-controller-linux/blob/master/gearVRC.py#L66
-                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
+                /*await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
                 await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
                 await controllerBluetoothInterface.runCommand(CBIUtils.CMD_SENSOR);
                 await controllerBluetoothInterface.runCommand(CBIUtils.CMD_LPM_ENABLE);
                 await controllerBluetoothInterface.runCommand(CBIUtils.CMD_LPM_DISABLE);
                 await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
                 await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
-                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);
+                await controllerBluetoothInterface.runCommand(CBIUtils.CMD_VR_MODE);*/
                 break;
             default:
         }
